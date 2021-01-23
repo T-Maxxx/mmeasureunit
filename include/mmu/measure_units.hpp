@@ -12,12 +12,12 @@ namespace mu::detail
         using base = TBase;
         using rep = Rep;
 
-        explicit constexpr unit(const Rep& Value_) : base(Value_) {}
+        explicit constexpr unit(const Rep& value_) : base(value_) {}
 
         // construct from underlying duration type.
-        explicit constexpr unit(const base& From_)
+        explicit constexpr unit(const base& from_)
         {
-            base::operator=(From_);
+            base::operator=(from_);
         }
     };
 
@@ -26,10 +26,10 @@ namespace mu::detail
     template<class Tag, class To, class Rep, class Period,
         std::enable_if_t<std::is_base_of_v<Tag, To>, int> = 0
     >
-    [[nodiscard]] constexpr To measure_unit_cast(const unit<Tag, Rep, Period>& From_) noexcept
+    [[nodiscard]] constexpr To measure_unit_cast(const unit<Tag, Rep, Period>& from_) noexcept
     {
         // Fail to deduce types for this function means cast type mismatch.
         // From is auto casted to its base.
-        return To{ std::chrono::duration_cast<To::base>(From_) };
+        return To{ std::chrono::duration_cast<To::base>(from_) };
     }
 }
